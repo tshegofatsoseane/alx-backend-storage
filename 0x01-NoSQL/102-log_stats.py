@@ -18,14 +18,14 @@ def log_stats():
     delete = logs_collection.count_documents({"method": "DELETE"})
     path = logs_collection.count_documents(
         {"method": "GET", "path": "/status"})
-    print(f"{total} logs")
+    print("{} logs".format(total))
     print("Methods:")
-    print(f"\tmethod GET: {get}")
-    print(f"\tmethod POST: {post}")
-    print(f"\tmethod PUT: {put}")
-    print(f"\tmethod PATCH: {patch}")
-    print(f"\tmethod DELETE: {delete}")
-    print(f"{path} status check")
+    print("\tmethod GET: {}".format(get))
+    print("\tmethod POST: {}".format(post))
+    print("\tmethod PUT: {}".format(put))
+    print("\tmethod PATCH: {}".format(patch))
+    print("\tmethod DELETE: {}".format(delete))
+    print("{} status check".format(path))
     print("IPs:")
     sorted_ips = logs_collection.aggregate(
         [{"$group": {"_id": "$ip", "count": {"$sum": 1}}},
@@ -34,7 +34,7 @@ def log_stats():
     for s in sorted_ips:
         if i == 10:
             break
-        print(f"\t{s.get('_id')}: {s.get('count')}")
+        print("\t{}: {}".format(s.get('_id'), s.get('count')))
         i += 1
 
 
